@@ -5,7 +5,9 @@ var Types = keystone.Field.Types;
  * User Model
  * ==========
  */
-var User = new keystone.List('User');
+var User = new keystone.List('User', {
+	nocreate: true
+});
 
 User.add({
 	name: { type: Types.Text, required: true, index: true },

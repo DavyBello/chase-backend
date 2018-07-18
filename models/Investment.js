@@ -5,7 +5,9 @@ var Types = keystone.Field.Types;
  * Investment Model
  * ==========
  */
-var Investment = new keystone.List('Investment');
+var Investment = new keystone.List('Investment', {
+	nocreate: true
+});
 
 Investment.add({
 	market: { type: Types.Text, initial: true },
