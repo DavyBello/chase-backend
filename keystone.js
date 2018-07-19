@@ -48,6 +48,7 @@ keystone.set('routes', require('./routes'));
 keystone.set('nav', {
 	users: 'users',
 	investments: 'Investment',
+	messages: ['Message', 'MessageReadReceipt'],
 	admins: 'Admin',
 });
 

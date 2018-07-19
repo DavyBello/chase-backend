@@ -6,7 +6,8 @@ var Types = keystone.Field.Types;
  * ==========
  */
 const MessageReadReceipt = new keystone.List('MessageReadReceipt', {
-	noedit: true
+	noedit: true,
+	nocreate: true
 });
 MessageReadReceipt.schema.set('usePushEach', true);
 

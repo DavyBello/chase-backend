@@ -35,5 +35,35 @@ module.exports = {
           error: 'An error occured trying to get messages.'
         })
       }
+  },
+  async createReadReciepts (req, res) {
+    try {
+      const user = req.sourceUser
+      const { messageIds = []} = req.body
+      // console.log(req.body);
+
+      if (Array.isArray(messageIds)){
+        await Promise.all(messageIds.map(async (messageId)=>{
+          console.log(messageId);
+          const exist = await MessageReadReceipt.findOne({message: messageId, user: user.id})
+          if (!exist) {
+            const readReceipt = new MessageReadReceipt({message: messageId, user: user.id})
+            await readReceipt.save();
+          }
+        }))
+        res.send({
+          status: 'success'
+        })
+      } else {
+        res.status(400).send({
+          error: 'invalid request body'
+        })
+      }
+    } catch (err) {
+      // console.log(err)
+      res.status(400).send({
+        error: 'An error occured trying to create read receipts'
+      })
+    }
   }
 }

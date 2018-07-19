@@ -10,7 +10,8 @@ const RECEIVERS_TYPE = [
  * ==========
  */
 const Message = new keystone.List('Message', {
-	track: true
+	track: true,
+	map: {name: 'title'}
 });
 Message.schema.set('usePushEach', true);
 

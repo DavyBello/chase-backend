@@ -58,4 +58,7 @@ exports = module.exports = function (app) {
 
 	app.get('/api/user/messages',
 	jwt({ secret: process.env.JWT_SECRET }), authAccess, MessageController.findMany)
+
+	app.post('/api/user/messages/markasread',
+	jwt({ secret: process.env.JWT_SECRET }), authAccess, MessageController.createReadReciepts)
 };
