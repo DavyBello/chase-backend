@@ -26,6 +26,7 @@ const bodyParser = require('body-parser');
 const AuthenticationController = require('./controllers/AuthenticationController')
 const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 const InvestmentController = require('./controllers/InvestmentController')
+const MessageController = require('./controllers/MessageController')
 
 // Setup Route Bindings
 exports = module.exports = function (app) {
@@ -54,4 +55,7 @@ exports = module.exports = function (app) {
 	 // NOTE 'investments' would be a better name for this route
 	// app.get('/api/user/investments',
   //  jwt({ secret: process.env.JWT_SECRET }), authAccess, InvestmentController.index)
+
+	app.get('/api/user/messages',
+	jwt({ secret: process.env.JWT_SECRET }), authAccess, MessageController.findMany)
 };
