@@ -44,11 +44,15 @@ module.exports = {
 
       if (Array.isArray(messageIds)){
         await Promise.all(messageIds.map(async (messageId)=>{
-          console.log(messageId);
-          const exist = await MessageReadReceipt.findOne({message: messageId, user: user.id})
-          if (!exist) {
-            const readReceipt = new MessageReadReceipt({message: messageId, user: user.id})
-            await readReceipt.save();
+          const messageExists = await Message.findById(messageId)
+          //only create readReceipts for existing messages
+          if (messageExists) {
+            const exist = await MessageReadReceipt.findOne({message: messageId, user: user.id})
+            //avoid duplicating read readReceipts
+            if (!exist) {
+              const readReceipt = new MessageReadReceipt({message: messageId, user: user.id})
+              await readReceipt.save();
+            }
           }
         }))
         res.send({
