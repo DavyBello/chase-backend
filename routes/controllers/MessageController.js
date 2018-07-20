@@ -44,7 +44,13 @@ module.exports = {
 
       if (Array.isArray(messageIds)){
         await Promise.all(messageIds.map(async (messageId)=>{
-          const messageExists = await Message.findById(messageId)
+          const messageExists = await Message.findOne({$and: [
+            { _id: messageId },
+            { $or: [
+              { receiversType: 'ALL_USERS' },
+              { $and: [ {receiversType: 'CUSTOM'}, {receivers: {$in: [req.sourceUser.id]}} ] }
+            ]}
+          ]})
           //only create readReceipts for existing messages
           if (messageExists) {
             const exist = await MessageReadReceipt.findOne({message: messageId, user: user.id})
